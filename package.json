@@ -1,0 +1,27 @@
+{
+  "name": "product-overview-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Honeydew/product-overview.git"
+  },
+  "author": "Andre Boussarath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Honeydew/product-overview/issues"
+  },
+  "homepage": "https://github.com/SDC-Honeydew/product-overview#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
