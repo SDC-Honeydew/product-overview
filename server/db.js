@@ -1,21 +1,11 @@
-const { Pool, Client } = require('pg')
-// pools will use environment variables
-// for connection information
-const pool = new Pool()
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+const { Client } = require('pg');
+const connectionString = 'postgres://aboussarath:password@localhost:5432/mydb';
 
-// you can also use async/await
-const res = await pool.query('SELECT NOW()')
-await pool.end()
+const client = new Client({
+  connectionString,
+});
 
-// clients will also use environment variables
-// for connection information
-const client = new Client()
-await client.connect()
-const res = await client.query('SELECT NOW()')
-await client.end()
+client.connect();
 
-//module.exports = pool, client
+
+module.exports = client
