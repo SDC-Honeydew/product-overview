@@ -5,30 +5,62 @@ let products = {
   get: (req, res) => {
 
     return models.products.getAll()
-    .then((products) => {
-      console.log('controller products', products);
-      res.status(200).send(products);
-    })
-    .catch((err) => {
-      res.send(err);
-    })
+      .then((products) => {
+        res.status(200).send(products);
+      })
+      .catch((err) => {
+        console.log('Error getting products', err);
+        res.send(err);
+      })
+  }
+}
+
+let product = {
+  get: (req, res) => {
+    let productId = req.params.product_id;
+    return models.product.get(productId)
+      .then((product) => {
+        res.status(200).send(product);
+      })
+      .catch((err) => {
+        console.log('Error getting styles', err);
+        res.send(err);
+      })
   }
 }
 
 let styles = {
   get: (req, res) => {
-    res.send('get the styles')
+    let productId = req.params.product_id;
+    return models.styles.getAll(productId)
+      .then((styles) => {
+        res.status(200).send(styles);
+      })
+      .catch((err) => {
+        console.log('Error getting styles', err);
+        res.send(err);
+      })
   }
 }
 
 let related = {
   get: (req, res) => {
-    res.send('get the related products')
+    let productId = req.params.product_id;
+    return models.related.getAll(productId)
+      .then((related) => {
+        let data = related.map((current) => current.related_product_id);
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        console.log('Error getting styles', err);
+        res.send(err);
+      })
   }
 }
 
 module.exports = {
   products,
+  product,
   styles,
   related
 }

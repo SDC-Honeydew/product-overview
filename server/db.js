@@ -7,5 +7,8 @@ const client = new Client({
 
 client.connect();
 
+function close() {
+  return client.end()
+}
 
-module.exports = client
+module.exports = { client, close }
