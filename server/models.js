@@ -33,8 +33,34 @@ let product = {
 
 let styles = {
   getAll: (id) => {
-    return db.client.query('SELECT * FROM styles WHERE productid = $1', [id])
-      .then(res => res.rows)
+    let queryString = `SELECT json_build_object(
+      'product_id', p.id,
+      'results', (select array_to_json(array_agg(row_to_json(t)))
+      from (
+        select id as style_id, name, sale_price, original_price, default_style as default,
+        (
+          select array_to_json(array_agg(row_to_json(d)))
+          from (
+            select thumbnail_url, url
+            from photos
+            where photos.styleid = styles.id
+          ) d
+        ) as photos,
+        (
+          select array_to_json(array_agg(row_to_json(s)))
+          from (
+            select id, size, quantity
+            from skus
+            where skus.styleid = styles.id
+          ) s
+        ) as skus
+        from styles where styles.productid = $1
+      ) t)
+    )
+    FROM product p
+    WHERE p.id = $1`
+    return db.client.query(queryString, [id])
+      .then(res => res.rows[0].json_build_object)
       .catch(e => console.error(e.stack))
   }
 }

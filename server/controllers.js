@@ -34,6 +34,16 @@ let styles = {
     let productId = req.params.product_id;
     return models.styles.getAll(productId)
       .then((styles) => {
+        styles.results.forEach((style) => {
+          style.skus = style.skus.reduce((acc, current) => {
+            let skuId = current.id
+            acc[skuId] = {
+              size: current.size,
+              quantity: current.quantity
+            }
+            return acc;
+          }, {})
+        })
         res.status(200).send(styles);
       })
       .catch((err) => {
