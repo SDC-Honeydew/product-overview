@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 30
+      arrivalRate: 10
+      name: Warm up
+    - duration: 60
+      arrivalRate: 10
+      rampTo: 100
+      name: Ramp up load
+    - duration: 60
+      arrivalRate: 100
+      rampTo: 500
+      name: Ramp up load
+  payload:
+    path: "../../product.csv"
+    fields:
+      - "id"
+
+scenarios:
+  - name: "Get one product"
+    flow:
+      - get:
+          url: "/products/{{id}}"

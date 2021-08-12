@@ -25,6 +25,7 @@
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
+    "artillery": "^1.7.6",
     "jest": "^27.0.6",
     "supertest": "^6.1.4"
   }
