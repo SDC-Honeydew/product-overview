@@ -1,12 +1,18 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client()
+const pool = new Pool({
+  user: 'ubuntu',
+  host: '54.167.251.57',
+  database: 'sdc',
+  password: 'ubuntu',
+  port: 5432,
+})
 
-client.connect();
+pool.connect();
 
 function close() {
-  return client.end()
+  return pool.end()
 }
 
-module.exports = { client, close }
+module.exports = { pool, close }
 

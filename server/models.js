@@ -2,7 +2,7 @@ let db = require('./db.js');
 
 let products = {
   getAll: () => {
-    return db.client.query('SELECT * FROM product LIMIT 5')
+    return db.pool.query('SELECT * FROM product LIMIT 5')
       .then(res => res.rows)
       .catch(e => console.error(e.stack))
   }
@@ -25,7 +25,7 @@ let product = {
     FROM product p
     WHERE p.id = $1`
 
-    return db.client.query(queryString, [id])
+    return db.pool.query(queryString, [id])
       .then(res => res.rows[0].json_build_object)
       .catch(e => console.error(e.stack))
   }
@@ -59,7 +59,7 @@ let styles = {
     )
     FROM product p
     WHERE p.id = $1`
-    return db.client.query(queryString, [id])
+    return db.pool.query(queryString, [id])
       .then(res => res.rows[0].json_build_object)
       .catch(e => console.error(e.stack))
   }
@@ -67,7 +67,7 @@ let styles = {
 
 let related = {
   getAll: (id) => {
-    return db.client.query('SELECT * FROM related WHERE current_product_id = $1', [id])
+    return db.pool.query('SELECT * FROM related WHERE current_product_id = $1', [id])
       .then(res => res.rows)
       .catch(e => console.error(e.stack))
   }
